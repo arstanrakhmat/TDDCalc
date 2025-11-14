@@ -34,6 +34,10 @@ class MainViewModel : ViewModel(), MainActions {
         inputMutableFlow.value = before + right
     }
 
+    override fun inputZero() {
+        TODO("Not yet implemented")
+    }
+
     override fun calculate() {
         val result = left + right
         resultMutableFlow.value = result.toString()

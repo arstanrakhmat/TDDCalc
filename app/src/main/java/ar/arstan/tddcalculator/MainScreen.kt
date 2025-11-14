@@ -58,6 +58,12 @@ fun MainScreen(input: String, result: String, actions: MainActions) {
                 testTag = "number two button",
                 onButtonClicked = actions::inputTwo
             )
+            MyButton(
+                modifier = Modifier.weight(1f),
+                text = "0",
+                testTag = "number zero button",
+                onButtonClicked = actions::inputZero
+            )
         }
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
@@ -104,6 +110,6 @@ fun PreviewMainScreen() {
         override fun plus() = Unit
         override fun inputTwo() = Unit
         override fun calculate() = Unit
-
+        override fun inputZero() = Unit
     })
 }
