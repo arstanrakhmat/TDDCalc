@@ -52,7 +52,7 @@ class ScenarioUiTest {
         mainPage.assertInputField(expected = "1+2")
 
         mainPage.clickEqualsButton()
-        mainPage.assertInputField(expected = "1+2=")
+        mainPage.assertInputField(expected = "1+2")
         mainPage.assertResult(expected = "3")
     }
 }
