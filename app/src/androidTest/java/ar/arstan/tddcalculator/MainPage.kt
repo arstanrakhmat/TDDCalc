@@ -13,6 +13,13 @@ class MainPage(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
 
+    private val numberZeroButton =
+        composeTestRule.onNode(
+            hasTestTag("number zero button")
+                    and hasText("0")
+                    and hasClickAction()
+        )
+
     private val numberOneButton =
         composeTestRule.onNode(
             hasTestTag("number one button")
@@ -73,6 +80,10 @@ class MainPage(
 
     fun assertResult(expected: String) {
         resultText.assertTextEquals(expected)
+    }
+
+    fun clickNumberZeroButton() {
+        numberZeroButton.performClick()
     }
 
 }
