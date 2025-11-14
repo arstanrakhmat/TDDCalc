@@ -7,7 +7,7 @@ import org.junit.Test
 
 class MainViewModelTest {
 
-    private lateinit val viewModel: MainViewModel
+    private lateinit var viewModel: MainViewModel
 
     @Before
     fun setup() {
@@ -16,7 +16,7 @@ class MainViewModelTest {
 
     @Test
     fun sum_of_two_numbers() {
-        val inputFlow: StateFlow<String> = viewModel.state
+        val inputFlow: StateFlow<String> = viewModel.inputFlow
         val resultFlow: StateFlow<String> = viewModel.resultFlow
 
         assertEquals("", inputFlow.value)
