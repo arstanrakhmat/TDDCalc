@@ -1,10 +1,33 @@
-*.iml
-.gradle
-/local.properties
-.idea
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# Gradle
+.gradle/
+build/
 local.properties
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+
+# MacOS
+.DS_Store
+
+# NDK / CMake
+.cxx/
+externalNativeBuild/
+captures/
+
+# Logs
+*.log
+
+# Generated files
+*/build/
+
+# Keystore (если у тебя есть релизный ключ, НИКОГДА не добавляй!)
+*.jks
+*.keystore
+
+# Kotlin
+kotlin-js-store/
+
+# Misc
+*.apk
+*.aab
