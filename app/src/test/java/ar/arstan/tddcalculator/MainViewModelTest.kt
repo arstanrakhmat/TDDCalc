@@ -8,20 +8,20 @@ import org.junit.Test
 class MainViewModelTest {
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var inputFlow: StateFlow<String>
+    private lateinit var resultFlow: StateFlow<String>
 
     @Before
     fun setup() {
         viewModel = MainViewModel()
+        inputFlow = viewModel.inputFlow
+        resultFlow = viewModel.resultFlow
+        assertEquals("", inputFlow.value)
+        assertEquals("", resultFlow.value)
     }
 
     @Test
     fun sum_of_two_numbers() {
-        val inputFlow: StateFlow<String> = viewModel.inputFlow
-        val resultFlow: StateFlow<String> = viewModel.resultFlow
-
-        assertEquals("", inputFlow.value)
-        assertEquals("", resultFlow.value)
-
         viewModel.inputOne()
         assertEquals("1", inputFlow.value)
 
@@ -38,12 +38,6 @@ class MainViewModelTest {
 
     @Test
     fun sum_of_two_numbers_corner_case() {
-        val inputFlow: StateFlow<String> = viewModel.inputFlow
-        val resultFlow: StateFlow<String> = viewModel.resultFlow
-
-        assertEquals("", inputFlow.value)
-        assertEquals("", resultFlow.value)
-
         viewModel.inputOne()
         assertEquals("1", inputFlow.value)
 
@@ -71,4 +65,14 @@ class MainViewModelTest {
         assertEquals("1000000000+2000000000", inputFlow.value)
         assertEquals("3000000000", resultFlow.value)
     }
+
+    @Test
+    fun prevent_from_multiple_zeros() {
+        viewModel.inputZero()
+        assertEquals("0", inputFlow.value)
+
+        viewModel.inputZero()
+        assertEquals("0", inputFlow.value)
+    }
+
 }
