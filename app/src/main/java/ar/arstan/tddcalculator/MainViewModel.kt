@@ -34,11 +34,15 @@ class MainViewModel : ViewModel(), MainActions {
 
     override fun inputZero() {
         if (addToLeft) {
-            left += "0"
-            inputMutableFlow.value = left
+            if (left != "0") {
+                left += "0"
+                inputMutableFlow.value = left
+            }
         } else {
-            right += "0"
-            inputMutableFlow.value = "$left+$right"
+            if (right != "0") {
+                right += "0"
+                inputMutableFlow.value = "$left+$right"
+            }
         }
     }
 

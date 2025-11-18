@@ -10,30 +10,25 @@ import org.junit.runner.RunWith
 class ScenarioUiTest {
 
     /**
+     * A JUnit 4 rule for launching and interacting with a Jetpack Compose UI.
      *
-     * The `@get:Rule` annotation is from JUnit 4 and marks the `composeTestRule`
-     *  property as a JUnit `TestRule`. A `TestRule` allows you to add behavior
-     *  that runs before and after each test method. In Kotlin, since
-     *  `composeTestRule` is a property, we must specify that the annotation
-     *   applies to the property's getter using the `@get:` use-site target. This
-     *   is how JUnit discovers and applies the rule.
+     * This rule, created by `createAndroidComposeRule<MainActivity>()`, serves as the main
+     * entry point for testing the UI of the `MainActivity`. It handles the lifecycle of the
+     * activity, launching it before each test and tearing it down afterward.
      *
-     * The `composeTestRule` is a test rule for Jetpack Compose UI tests.
-     * It is created using `createAndroidComposeRule<MainActivity>()`, which launches
-     * the `MainActivity` of the app.
+     * The `@get:Rule` annotation is necessary for JUnit 4 to recognize this property as a
+     * `TestRule`. In Kotlin, the `@get:` use-site target specifies that the annotation
+     * applies to the property's getter.
      *
-     * We need this rule for a few key reasons:
-     * 1.  **Lifecycle Management:** It handles the lifecycle of the `MainActivity`,
-     *     ensuring it's launched and torn down correctly for each test.
-     * 2.  **UI Interaction:** It provides the primary API for interacting with the
-     *     Compose UI. We can use it to find UI elements (Composables), perform
-     *     actions on them (like clicks or text input), and assert their state
-     *     (e.g., visibility, text content).
-     * 3.  **Synchronization:** The rule automatically waits for the UI to be idle
-     *     before performing actions or assertions, which helps prevent flaky tests.
+     * Key functionalities provided by this rule include:
+     * 1.  **Lifecycle Management:** Automatically starts and stops the `MainActivity` for each test.
+     * 2.  **UI Interaction:** Provides the API to find UI elements (Composables), perform actions
+     *     (e.g., clicks, text input), and make assertions about their state (e.g., text content, visibility).
+     * 3.  **Synchronization:** Ensures test stability by automatically waiting for the UI to become idle
+     *     before executing actions or assertions, preventing flakiness.
      *
-     * In essence, `composeTestRule` is the bridge between our test code and the
-     * live, running Compose UI of our application.
+     * In essence, `composeTestRule` is the bridge between our test code and the live, running
+     * Compose UI of the application.
      */
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
@@ -84,5 +79,26 @@ class ScenarioUiTest {
         mainPage.clickEqualsButton()
         mainPage.assertInputField(expected = "1000000000+2000000000")
         mainPage.assertResult(expected = "3000000000")
+    }
+
+    @Test
+    fun prevent_multiple_zeros() {
+        repeat(10) {
+            mainPage.clickNumberZeroButton()
+            mainPage.assertInputField(expected = "0")
+        }
+
+        mainPage.clickOperationPlusButton()
+        mainPage.assertInputField(expected = "0+")
+
+        repeat(10) {
+            mainPage.clickNumberZeroButton()
+            mainPage.assertInputField(expected = "0+0")
+        }
+
+        mainPage.clickEqualsButton()
+        mainPage.assertInputField(expected = "0+0")
+        mainPage.assertResult(expected = "0")
+
     }
 }
